@@ -3,3 +3,7 @@
 Gemfile.lock
 pkg/*
 .rvmrc
+
+# ignore intellij files
+.idea
+*.iml
