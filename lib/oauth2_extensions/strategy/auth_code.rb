@@ -1,4 +1,3 @@
-require 'oauth2/strategy/base'
 require 'oauth2/strategy/auth_code'
 
 # Retrieve an access token given the specified validation code.
