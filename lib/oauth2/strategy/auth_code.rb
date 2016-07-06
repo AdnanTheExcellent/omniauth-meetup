@@ -1,4 +1,5 @@
 require 'oauth2/strategy/base'
+require 'oauth2/strategy/auth_code'
 
 # Retrieve an access token given the specified validation code.
 #
@@ -6,17 +7,17 @@ require 'oauth2/strategy/base'
 # @param [Hash] params additional params
 # @param [Hash] opts options
 # @note that you must also provide a :redirect_uri with most OAuth 2.0 providers
-module OAuth2
-  module Strategy
-    class AuthCode  < Base
-      def get_token(code, params = {}, opts = {})
-        params['redirect_uri'] = params['redirect_uri'].split('?').first if params.has_key? 'redirect_uri'
-        params = {
-            'grant_type' => 'authorization_code',
-            'code' => code
-        }.merge(client_params).merge(params)
-        @client.get_token(params, opts)
-      end
+module OAuth2Extensions
+  module MeetupAuthCode
+    def get_token(code, params = {}, opts = {})
+      params['redirect_uri'] = params['redirect_uri'].split('?').first if params.has_key? 'redirect_uri'
+      params = {
+          'grant_type' => 'authorization_code',
+          'code' => code
+      }.merge(client_params).merge(params)
+      @client.get_token(params, opts)
     end
   end
 end
+
+OAuth2::Strategy::AuthCode.include OAuth2Extensions::MeetupAuthCode
