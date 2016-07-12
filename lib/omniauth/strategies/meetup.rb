@@ -11,19 +11,14 @@ module OmniAuth
         :token_url => 'https://secure.meetup.com/oauth2/access'
       }
 
+      # see http://www.meetup.com/de-DE/meetup_api/auth/#messaging_scope
+      SCOPES = [:ageless, :basic, :group_edit, :group_content_edit, :messaging]
+      option :authorize_options, {
+          scope: SCOPES.join('+')
+      }
+
       def request_phase
         super
-      end
-
-      SCOPES = [:ageless, :basic, :group_edit, :group_content_edit, :messaging]
-
-      def authorize_params
-        params = super
-        scope_params = {
-            # see http://www.meetup.com/de-DE/meetup_api/auth/#messaging_scope
-            scope: SCOPES.join('+')
-        }
-        params.merge scope_params
       end
 
       uid{ raw_info['id'] }
