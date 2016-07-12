@@ -11,6 +11,7 @@ module OmniAuth
         :token_url => 'https://secure.meetup.com/oauth2/access'
       }
 
+      option :scope, true
       # see http://www.meetup.com/de-DE/meetup_api/auth/#messaging_scope
       SCOPES = [:ageless, :basic, :group_edit, :group_content_edit, :messaging]
       option :authorize_options, {
