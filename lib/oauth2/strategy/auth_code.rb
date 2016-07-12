@@ -9,6 +9,7 @@ require 'oauth2/strategy/base'
 module OAuth2
   module Strategy
     class AuthCode  < Base
+
       def get_token(code, params = {}, opts = {})
         params['redirect_uri'] = params['redirect_uri'].split('?').first if params.has_key? 'redirect_uri'
         params = {

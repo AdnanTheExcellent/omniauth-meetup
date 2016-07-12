@@ -6,13 +6,24 @@ module OmniAuth
       option :name, "meetup"
 
       option :client_options, {
-        :site => "https://api.meetup.com",
+        :site => 'https://api.meetup.com',
         :authorize_url => 'https://secure.meetup.com/oauth2/authorize',
         :token_url => 'https://secure.meetup.com/oauth2/access'
       }
 
       def request_phase
         super
+      end
+
+      SCOPES = [:ageless, :basic, :group_edit, :group_content_edit, :messaging]
+
+      def authorize_params
+        params = super
+        scope_params = {
+            # see http://www.meetup.com/de-DE/meetup_api/auth/#messaging_scope
+            scope: SCOPES.join('+')
+        }
+        params.merge scope_params
       end
 
       uid{ raw_info['id'] }
